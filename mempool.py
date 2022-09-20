@@ -21,8 +21,27 @@ WBTC_MANI_LP = "0x58f73fD7D530BbFB97141B8aAA79D9C60BA5583c"
 web3 = Web3(Web3.HTTPProvider("http://18.188.93.177:8545"))
 
 
+#Check only txs going to Router:
+RouterManifold = web3.toChecksumAddress(Router)
+manifoldContract = web3.eth.contract(address = RouterManifold)
+
+
 def handle_event(event):
-    print(Web3.toJSON(event))
+    # print(Web3.toJSON(event))
+    try: 
+        getTrans = Web3.toJSON(event).strip('"')
+        # print(getTrans)
+        trans = web3.eth.get_transaction(getTrans) #get_transaction details from transaction hash
+        to = trans['to']
+        data = trans['input']
+        if to == RouterManifold:
+            # print(data)
+            decoded = manifoldContract.decode_function_input(data)
+            print(decoded)
+        else: print('nothing to see here')
+    except Exception as e:
+        print(f'error occured: {e}')
+    
 
 #Specify by specific contract 
 event_filter = web3.eth.filter({"address": WETH_WBTC_LP })

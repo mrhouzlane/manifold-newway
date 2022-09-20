@@ -24,7 +24,7 @@ def setup() :
     # print(w3.eth.getBlock('latest'))
     
 def retrieve_gas():
-    print(web3.eth.generate_gas_price())
+    return web3.eth.generate_gas_price()
     
     
 def return_bytecode(account: str):
@@ -34,7 +34,7 @@ def return_bytecode(account: str):
 
 if __name__ == '__main__':
     # setup()
-    # retrieve_gas()
-    print(return_bytecode(Router))
+    print(retrieve_gas())
+    # print(return_bytecode(Router))
   
 
