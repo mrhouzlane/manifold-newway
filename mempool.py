@@ -1,11 +1,8 @@
 from web3 import Web3
 import asyncio
-import json 
-
 
 Router = "0xc8A9B074684B78F2F8F44aE692e47b5674af0Efa"
 Multicall =  "0x016eE5b250Cb8036f1D6F444b699d6E773A6649E"
-
 
 #ERC20 Tokens : 
 WETH_token = "0xcadA750792A3Ac6aB14561124CCE195bc8240C14"
@@ -25,22 +22,37 @@ web3 = Web3(Web3.HTTPProvider("http://18.188.93.177:8545"))
 RouterManifold = web3.toChecksumAddress(Router)
 manifoldContract = web3.eth.contract(address = RouterManifold)
 
+def get_balance():
+    
+    print(web3.clientVersion)
+    
+    balance_WETH_WBTC_LP = web3.eth.get_balance(WETH_WBTC_LP)
+    balance_WETH_MANI_LP = web3.eth.get_balance(WETH_MANI_LP)
+    balance_WBTC_MANI_LP = web3.eth.get_balance(WBTC_MANI_LP)
 
+    print(f"Balance of WETH-WBTC LP is : {balance_WETH_WBTC_LP}")
+    print(f"Balance of WETH_MANI_LP LP is : {balance_WETH_MANI_LP}")
+    print(f"Balance of WBTC_MANI_LP LP is : {balance_WBTC_MANI_LP}")
+
+    
+def get_function(input: str, event) :
+    pass
+    
 def handle_event(event):
     # print(Web3.toJSON(event))
     try: 
         getTrans = Web3.toJSON(event).strip('"')
         # print(getTrans)
-        trans = web3.eth.get_transaction(getTrans) #get_transaction details from transaction hash
+        trans = web3.eth.get_transaction(getTrans) #Look up txs 
+        # receipt = web3.eth.get_transaction_receipt(getTrans) #Look up tx receipts 
+        # print(receipt)
         to = trans['to']
         data = trans['input']
         if to == RouterManifold:
-            # print(data)
-            decoded = manifoldContract.decode_function_input(data)
-            print(decoded)
+            print(data)
         else: print('nothing to see here')
     except Exception as e:
-        print(f'error occured: {e}')
+        print(f'error occured {e}')
     
 
 #Specify by specific contract 
@@ -67,3 +79,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # get_balance()
