@@ -16,7 +16,7 @@ bots = [
   "0x67b59a383b6ba37ade05222027372c7532f2cba2",
   "0xf80b6ed95b70dc6469aea0a1a9f983bd3ad21640",
   "0x820a47cf9a23a3bbd4321de6760fbae4184e1935",
-  "0x839B878873998F02cE2f5c6D78d1B0842e58F192"
+  "0x839B878873998F02cE2f5c6D78d1B0842e58F192" # my address : // waiting for airdrop // 
 ]
 
 def main():
